@@ -48,12 +48,12 @@ async def exotel_ai(request: Request):
             f.write(audio_data)
 
         # For now, use a public MP3 link for Exotel playback test
-        public_url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        public_url = "https://limewire.com/d/tMtE7#U0DbrTTiXe"
 
     except Exception as e:
         # In case ElevenLabs fails, fall back to demo audio
         print("Error generating audio:", e)
-        public_url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+       public_url = "https://limewire.com/d/tMtE7#U0DbrTTiXe"
 
     # 3️⃣ Send XML response to Exotel
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
