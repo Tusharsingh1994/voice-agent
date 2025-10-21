@@ -1,11 +1,14 @@
 from fastapi import FastAPI, Request, Response
 from openai import OpenAI
 from elevenlabs import ElevenLabs
-import os, tempfile
+import os
+import tempfile
 
 app = FastAPI()
 
+# -------------------------------------------------------
 # Load environment variables
+# -------------------------------------------------------
 EXOTEL_SID = os.getenv("EXOTEL_SID")
 EXOTEL_API_KEY = os.getenv("EXOTEL_API_KEY")
 EXOTEL_TOKEN = os.getenv("EXOTEL_TOKEN")
@@ -47,13 +50,13 @@ async def exotel_ai(request: Request):
         with open(temp_path, "wb") as f:
             f.write(audio_data)
 
-        # For now, use a public MP3 link for Exotel playback test
+        # 🔊 Play your hosted ElevenLabs audio (LimeWire link)
         public_url = "https://limewire.com/d/tMtE7#U0DbrTTiXe"
 
     except Exception as e:
         # In case ElevenLabs fails, fall back to demo audio
         print("Error generating audio:", e)
-       public_url = "https://limewire.com/d/tMtE7#U0DbrTTiXe"
+        public_url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
 
     # 3️⃣ Send XML response to Exotel
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -63,8 +66,9 @@ async def exotel_ai(request: Request):
 
     return Response(content=xml, media_type="text/xml")
 
+
 # -------------------------------------------------------
-# TEST ROUTE for Browser / Exotel validation
+# TEST ROUTE (for Browser / Exotel validation)
 # -------------------------------------------------------
 @app.get("/exotel-ai-test")
 def exotel_test():
@@ -77,6 +81,7 @@ def exotel_test():
     <Play>https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3</Play>
 </Response>"""
     return Response(content=xml, media_type="text/xml")
+
 
 # -------------------------------------------------------
 # HEALTH CHECK ROUTE
